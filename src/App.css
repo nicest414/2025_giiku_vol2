@@ -1,0 +1,1396 @@
+/* 🎨 Modern Mesugaki AI Shopping Extension Styles 💅 */
+
+/* Base Styles */
+body {
+  font-family: 'Hiragino Kaku Gothic Pro', 'Meiryo', sans-serif;
+  background: linear-gradient(135deg, #fff5f7 0%, #ffeef0 100%);
+  margin: 0;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.App {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 1.5rem;
+  box-shadow: 0 15px 35px rgba(255, 182, 193, 0.15);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Animation Keyframes */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Header Styles */
+.app-header {
+  background: linear-gradient(135deg, #ff8da1 0%, #ffb6c1 100%);
+  color: white;
+  text-align: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.app-header::before {
+  content: '✨';
+  position: absolute;
+  top: 1rem;
+  left: 2rem;
+  font-size: 2rem;
+  opacity: 0.7;
+  animation: twinkle 2s infinite;
+}
+
+.app-header::after {
+  content: '💕';
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
+  font-size: 2rem;
+  opacity: 0.7;
+  animation: twinkle 2s infinite 0.5s;
+}
+
+.app-header h1 {
+  margin: 0 0 0.5rem;
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 1.1rem;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+/* Main Content */
+.app-main {
+  padding: 2rem;
+}
+
+/* Timer Section */
+.timer-section {
+  background: linear-gradient(135deg, #fef8fa 0%, #fff0f3 100%);
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-top: 2rem; /* 上部マージンを追加 */
+  border: 2px solid #ffd1dc;
+  position: relative;
+  animation: fadeIn 0.6s ease-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(255, 182, 193, 0.15); /* シャドウを追加 */
+}
+
+.timer-section::before {
+  content: '⏰';
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  font-size: 1.5rem;
+}
+
+/* Progress Bar Component */
+.progress-bar-container {
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 2rem; /* 少し薄く */
+  background-color: #ffe6eb;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(255, 182, 193, 0.3), inset 0 1px 3px rgba(0,0,0,0.1);
+  border: 2px solid #ffb6c1;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(45deg, #ff1744 0%, #ff6b8b 25%, #ff8da1 50%, #ffb6c1 75%, #ffc1cc 100%);
+  border-radius: 1rem;
+  transition: width 0.5s ease-out;
+  position: relative;
+  will-change: width;
+  box-shadow: 0 2px 6px rgba(255, 107, 139, 0.5);
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+  animation: shimmer 2s infinite;
+}
+
+/* Timer Display Component */
+.timer-display {
+  width: 100%; /* 幅を明示的に指定 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.timer-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ff6b8b;
+  margin: 0.5rem 0;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.timer-subtitle {
+  font-size: 1rem;
+  color: #ff8da1;
+  margin: 0.25rem 0;
+  opacity: 0.8;
+}
+
+.timer-completed {
+  color: #28a745;
+  animation: pulse 1s infinite;
+}
+
+/* Timer Completed Section */
+.timer-completed-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  margin: 2rem 0;
+  background: linear-gradient(135deg, #e8f5e8 0%, #f0fff0 100%);
+  border-radius: 1.5rem;
+  border: 2px solid #90ee90;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.completion-message {
+  text-align: center;
+  color: #28a745;
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  animation: pulse 2s infinite;
+}
+
+.completion-subtitle {
+  font-size: 1.2rem;
+  color: #6c757d;
+  margin-top: 0.5rem;
+  opacity: 0.8;
+  animation: none;
+}
+
+/* Products Container */
+.products-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Product Card Component */
+.product-card {
+  background: white;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 25px rgba(255, 182, 193, 0.1);
+  border: 2px solid #ffd1dc;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ff8da1, #ffb6c1, #ffd1dc);
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px rgba(255, 182, 193, 0.2);
+}
+
+.product-content {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+/* Product Info Section */
+.product-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #ff6b8b;
+  margin: 0 0 1rem;
+  line-height: 1.4;
+}
+
+.product-price {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #ff8da1;
+  margin: 0 0 1rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.product-description {
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.product-image {
+  width: 150px;
+  height: 150px;
+  object-fit: contain; /* cover -> contain に変更 */
+  border-radius: 1rem;
+  border: 3px solid #ffd1dc;
+  box-shadow: 0 4px 12px rgba(255, 182, 193, 0.2);
+  flex-shrink: 0;
+  background-color: #fff; /* 背景を白に設定 */
+  padding: 8px; /* 余白を追加 */
+  box-sizing: border-box;
+}
+
+/* Character Section Component */
+.character-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.speech-bubble {
+  background: linear-gradient(135deg, #fef1f4 0%, #fff5f7 100%);
+  border: 2px dashed #ffb6c1;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  position: relative;
+  flex-grow: 1;
+  margin-right: 1rem;
+  box-shadow: 0 4px 12px rgba(255, 182, 193, 0.1);
+}
+
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  right: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-left: 12px solid #fef1f4;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+}
+
+.message-text {
+  color: #ff6b8b;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.character-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid #ffd1dc;
+  box-shadow: 0 6px 20px rgba(255, 182, 193, 0.3);
+  object-fit: contain; /* cover -> contain に変更 */
+  flex-shrink: 0;
+  background-color: #fff; /* 背景を白に設定 */
+  padding: 4px; /* 余白を追加 */
+  box-sizing: border-box;
+}
+
+/* Loading Spinner Component */
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  text-align: center;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #ffe6eb;
+  border-top: 4px solid #ff8da1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+.loading-message {
+  color: #ff6b8b;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+/* AI Loading Section */
+.ai-loading-section {
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #fff0f3 0%, #fef8fa 100%);
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+  border: 2px dashed #ffb6c1;
+}
+
+/* Error Display Component */
+.error-display {
+  text-align: center;
+  padding: 3rem;
+  background: linear-gradient(135deg, #ffe6e6 0%, #fff0f0 100%);
+  border-radius: 1rem;
+  border: 2px solid #ffccd5;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.retry-button {
+  background: linear-gradient(135deg, #ff8da1 0%, #ffb6c1 100%);
+  color: white;
+  border: none;
+  border-radius: 2rem;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 182, 193, 0.3);
+}
+
+.retry-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 182, 193, 0.4);
+}
+
+/* Proceed Section */
+.proceed-section {
+  text-align: center;
+  padding-top: 2rem;
+}
+
+/* Proceed Button Component */
+.proceed-button {
+  background: linear-gradient(135deg, #cccccc 0%, #dddddd 100%);
+  color: #999999;
+  border: none;
+  border-radius: 2rem;
+  padding: 1.2rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: not-allowed;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(200, 200, 200, 0.3);
+  position: relative;
+  overflow: hidden;
+  margin-top: 1.5rem; /* タイマーとの間隔を追加 */
+}
+
+.proceed-button.enabled,
+.proceed-button.active {
+  background: linear-gradient(135deg, #ff8da1 0%, #ffb6c1 100%);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(255, 182, 193, 0.4);
+}
+
+.proceed-button.enabled:hover,
+.proceed-button.active:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 182, 193, 0.5);
+}
+
+.proceed-button.enabled::before,
+.proceed-button.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s;
+}
+
+.proceed-button.enabled:hover::before,
+.proceed-button.active:hover::before {
+  left: 100%;
+}
+
+/* Empty Cart State */
+.empty-cart {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #fef8fa 0%, #fff0f3 100%);
+  border-radius: 1rem;
+  margin: 2rem 0;
+}
+
+.empty-cart p {
+  font-size: 1.2rem;
+  color: #ff6b8b;
+  margin-bottom: 2rem;
+}
+
+.empty-cart button {
+  background: linear-gradient(135deg, #ff8da1 0%, #ffb6c1 100%);
+  color: white;
+  border: none;
+  border-radius: 2rem;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 182, 193, 0.3);
+}
+
+.empty-cart button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 182, 193, 0.4);
+}
+
+/* Footer */
+.app-footer {
+  background: linear-gradient(135deg, #fff0f3 0%, #fef8fa 100%);
+  text-align: center;
+  padding: 1.5rem;
+  color: #ff6b8b;
+  font-style: italic;
+}
+
+/* User Level System Styles */
+.user-level-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.level-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.level-badge {
+  background: linear-gradient(135deg, #ff6b8b 0%, #ff8da1 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 1.5rem;
+  font-weight: bold;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px rgba(255, 107, 139, 0.3);
+}
+
+.level-badge.big {
+  font-size: 2rem;
+  padding: 1rem 2rem;
+  margin: 1rem 0;
+}
+
+.level-title {
+  color: #ff6b8b;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.level-details {
+  width: 100%;
+  max-width: 400px;
+}
+
+.exp-bar-container {
+  margin: 1rem 0;
+}
+
+.exp-bar {
+  width: 100%;
+  height: 1rem;
+  background-color: #ffe6eb;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 2px solid #ffb6c1;
+  margin-bottom: 0.5rem;
+}
+
+.exp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ffd700 0%, #ffb347 100%);
+  border-radius: 0.5rem;
+  transition: width 0.5s ease-out;
+}
+
+.exp-text {
+  font-size: 0.9rem;
+  color: #ff6b8b;
+  font-weight: 500;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 0.5rem;
+  background: linear-gradient(135deg, #fff0f3 0%, #ffe6eb 100%);
+  border-radius: 0.8rem;
+  border: 1px solid #ffd1dc;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.8rem;
+  color: #ff8da1;
+  margin-bottom: 0.25rem;
+}
+
+.stat-value {
+  display: block;
+  font-weight: bold;
+  color: #ff6b8b;
+  font-size: 1rem;
+}
+
+/* Achievement System Styles */
+.achievement-display {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #fef8fa 0%, #fff0f3 100%);
+  border-radius: 1rem;
+  border: 2px solid #ffd1dc;
+}
+
+.achievement-display.empty {
+  text-align: center;
+  color: #ff8da1;
+  font-style: italic;
+}
+
+.achievement-display h3 {
+  margin: 0 0 1rem;
+  color: #ff6b8b;
+  text-align: center;
+}
+
+.achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.achievement-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 0.8rem;
+  border: 2px solid #ffe6eb;
+  box-shadow: 0 2px 8px rgba(255, 182, 193, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.achievement-item:hover {
+  transform: translateY(-2px);
+}
+
+.achievement-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.achievement-info h4 {
+  margin: 0 0 0.25rem;
+  color: #ff6b8b;
+  font-size: 1rem;
+}
+
+.achievement-info p {
+  margin: 0 0 0.25rem;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.achievement-info small {
+  color: #999;
+  font-size: 0.8rem;
+}
+
+/* Level Up Notification Styles */
+.level-up-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.level-up-modal {
+  background: linear-gradient(135deg, #fff0f3 0%, #fef8fa 100%);
+  border-radius: 2rem;
+  padding: 3rem;
+  text-align: center;
+  border: 3px solid #ffb6c1;
+  box-shadow: 0 20px 60px rgba(255, 182, 193, 0.4);
+  animation: scaleIn 0.5s ease-out;
+  max-width: 400px;
+}
+
+.level-up-animation {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  animation: pulse 1s infinite;
+}
+
+.level-up-modal h2 {
+  color: #ff6b8b;
+  margin: 0 0 1rem;
+  font-size: 2rem;
+}
+
+.new-level {
+  margin: 1.5rem 0;
+}
+
+.new-title {
+  display: block;
+  color: #ff8da1;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+.level-up-close {
+  background: linear-gradient(135deg, #ff8da1 0%, #ffb6c1 100%);
+  color: white;
+  border: none;
+  border-radius: 2rem;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 182, 193, 0.3);
+}
+
+.level-up-close:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 182, 193, 0.4);
+}
+
+/* Danger Level Indicator Styles */
+.danger-indicator {
+  margin: 1rem 0;
+  padding: 1rem 1.5rem;
+  border-radius: 1rem;
+  border: 2px solid;
+  font-weight: 500;
+}
+
+.danger-indicator.danger-high {
+  background: linear-gradient(135deg, #ffe6e6 0%, #fff0f0 100%);
+  border-color: #ff6b6b;
+  color: #d32f2f;
+}
+
+.danger-indicator.danger-medium {
+  background: linear-gradient(135deg, #fff8e6 0%, #fffbf0 100%);
+  border-color: #ffb347;
+  color: #f57c00;
+}
+
+.danger-indicator.danger-low {
+  background: linear-gradient(135deg, #e8f5e8 0%, #f0fff0 100%);
+  border-color: #90ee90;
+  color: #2e7d32;
+}
+
+.danger-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.danger-level {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.danger-message {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* User Dashboard Styles */
+.user-dashboard {
+  margin: 2rem 0;
+  padding: 2rem;
+  background: linear-gradient(135deg, #fef8fa 0%, #fff0f3 100%);
+  border-radius: 1.5rem;
+  border: 2px solid #ffd1dc;
+  box-shadow: 0 8px 25px rgba(255, 182, 193, 0.15);
+}
+
+/* Footer Enhancement */
+.level-footer {
+  font-size: 0.9rem;
+  color: #ff8da1;
+  opacity: 0.8;
+  margin-top: 0.5rem;
+}
+
+.exp-gained {
+  color: #ffd700;
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Animations */
+@keyframes scaleIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Purchase History Display Styles */
+.purchase-history {
+  margin: 2rem 0;
+  background: linear-gradient(135deg, #fef8fa 0%, #fff0f3 100%);
+  border-radius: 1rem;
+  border: 2px solid #ffd1dc;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(255, 182, 193, 0.15);
+}
+
+.purchase-history-header {
+  background: linear-gradient(135deg, #ff8da1 0%, #ffb6c1 100%);
+  color: white;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.purchase-history-header h3 {
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.tab-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.tab-buttons button {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 1.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab-buttons button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.tab-buttons button.active {
+  background: white;
+  color: #ff6b8b;
+  border-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.purchase-history-content {
+  padding: 2rem;
+}
+
+/* Loading State */
+.purchase-history-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem;
+  color: #ff8da1;
+}
+
+.loading-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  animation: pulse 1.5s infinite;
+}
+
+/* Stats Panel */
+.stats-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.stat-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(255, 182, 193, 0.1);
+  border: 2px solid #ffe6eb;
+  transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.stat-card.blocked {
+  border-color: #90ee90;
+  background: linear-gradient(135deg, #f0fff0 0%, #e8f5e8 100%);
+}
+
+.stat-card.purchased {
+  border-color: #ffd700;
+  background: linear-gradient(135deg, #fffbf0 0%, #fff8e1 100%);
+}
+
+.stat-card.regret {
+  border-color: #ffb6c1;
+  background: linear-gradient(135deg, #fff0f3 0%, #ffe6eb 100%);
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.stat-info h4 {
+  margin: 0 0 0.5rem;
+  color: #ff6b8b;
+  font-size: 1rem;
+}
+
+.stat-info .stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ff6b8b;
+  margin: 0.25rem 0;
+}
+
+.stat-info .stat-amount {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ff8da1;
+}
+
+.stat-info .stat-rate {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ff6b8b;
+}
+
+/* Category Stats */
+.category-stats {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 2px solid #ffe6eb;
+}
+
+.category-stats h4 {
+  margin: 0 0 1rem;
+  color: #ff6b8b;
+  text-align: center;
+}
+
+.category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.category-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ffe6eb;
+}
+
+.category-item:last-child {
+  border-bottom: none;
+}
+
+.category-name {
+  color: #ff6b8b;
+  font-weight: 500;
+}
+
+.category-data {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.category-count {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.category-amount {
+  font-weight: bold;
+  color: #ff8da1;
+}
+
+/* History Panel */
+.history-panel {
+  min-height: 200px;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.history-item {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 2px solid #ffe6eb;
+  box-shadow: 0 2px 8px rgba(255, 182, 193, 0.1);
+}
+
+.history-item.blocked {
+  border-left: 4px solid #90ee90;
+}
+
+.history-item.purchased {
+  border-left: 4px solid #ffd700;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.history-type {
+  font-weight: bold;
+  color: #ff6b8b;
+}
+
+.history-date {
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.history-amount {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #ff8da1;
+  margin-bottom: 0.5rem;
+}
+
+.history-items {
+  color: #666;
+}
+
+.history-item-name {
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.history-more {
+  font-size: 0.8rem;
+  color: #999;
+  font-style: italic;
+}
+
+/* Regrets Panel */
+.regrets-panel {
+  min-height: 200px;
+}
+
+.regrets-intro {
+  text-align: center;
+  color: #ff6b8b;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+.regrets-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.regret-item {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 2px solid #ffe6eb;
+  border-left: 4px solid #ff6b8b;
+  box-shadow: 0 2px 8px rgba(255, 182, 193, 0.1);
+}
+
+.regret-info {
+  margin-bottom: 1rem;
+}
+
+.regret-info h4 {
+  margin: 0 0 0.5rem;
+  color: #ff6b8b;
+  font-size: 1.1rem;
+}
+
+.regret-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.regret-price {
+  font-weight: bold;
+  color: #ff8da1;
+}
+
+.regret-date {
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.regret-reason {
+  background: linear-gradient(135deg, #fff0f3 0%, #ffe6eb 100%);
+  padding: 1rem;
+  border-radius: 0.8rem;
+  color: #ff6b8b;
+  font-style: italic;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem;
+  text-align: center;
+  color: #ff8da1;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.7;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+/* Sidebar Styles */
+.sidebar-toggle {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1001;
+  background: linear-gradient(135deg, #ff8da1 0%, #ffb6c1 100%);
+  color: white;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.8rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 182, 193, 0.3);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sidebar-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 182, 193, 0.4);
+}
+
+.sidebar-toggle.open {
+  left: 27rem; /* サイドバー幅 (25rem) + マージン */
+}
+
+.toggle-icon {
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.toggle-text {
+  font-size: 0.8rem;
+}
+
+/* サイドバー本体 */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 25rem; /* 幅を320px → 400px (25rem) に拡大 */
+  height: 100vh;
+  background: linear-gradient(135deg, #fef8fa 0%, #fff0f3 100%);
+  border-right: 3px solid #ffd1dc;
+  box-shadow: 4px 0 20px rgba(255, 182, 193, 0.2);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar.closed {
+  transform: translateX(-100%);
+}
+
+/* サイドバーヘッダー */
+.sidebar-header {
+  background: linear-gradient(135deg, #ff8da1 0%, #ffb6c1 100%);
+  color: white;
+  padding: 1.5rem;
+  border-bottom: 2px solid #ff6b8b;
+}
+
+.sidebar-header h2 {
+  margin: 0 0 1rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* タブナビゲーション */
+.sidebar-tabs {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.tab-button {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 1rem;
+  padding: 0.5rem 0.5rem; /* 横パディングを少し減らして3つ収まりやすく */
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.tab-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.tab-button.active {
+  background: white;
+  color: #ff6b8b;
+  border-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* サイドバーコンテンツ */
+.sidebar-content {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.sidebar-section {
+  height: 100%;
+}
+
+/* サイドバーフッター */
+.sidebar-footer {
+  background: linear-gradient(135deg, #ffe6eb 0%, #fff0f3 100%);
+  border-top: 2px solid #ffd1dc;
+  padding: 1rem 1.5rem;
+}
+
+.user-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.summary-item {
+  text-align: center;
+  flex: 1;
+}
+
+.summary-label {
+  display: block;
+  font-size: 0.7rem;
+  color: #ff8da1;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+.summary-value {
+  display: block;
+  font-weight: bold;
+  color: #ff6b8b;
+  font-size: 0.9rem;
+}
+
+/* サイドバーオーバーレイ（モバイル用） */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  opacity: 0;
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* メインコンテンツの調整 */
+.App.sidebar-open {
+  margin-left: 25rem; /* サイドバー幅に合わせて調整 */
+  transition: margin-left 0.3s ease;
+}
+
+/* ヘッダーレベル表示の簡素化 */
+.header-level-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.header-level-display .level-badge {
+  background: linear-gradient(135deg, #ff6b8b 0%, #ff8da1 100%);
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 1rem;
+  font-weight: bold;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 8px rgba(255, 107, 139, 0.3);
+}
+
+.header-level-display .level-title {
+  color: #ff6b8b;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 22rem; /* モバイルでも少し広めに */
+  }
+  
+  .sidebar-toggle.open {
+    left: 23rem;
+  }
+  
+  .App.sidebar-open {
+    margin-left: 0; /* モバイルではオーバーレイ表示 */
+  }
+  
+  .sidebar-overlay {
+    display: block;
+  }
+}
