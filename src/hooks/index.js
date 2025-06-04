@@ -1,5 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
 
+// 新しいカスタムフックをエクスポート
+export { useAppState } from './useAppState';
+export { useBusinessLogic } from './useBusinessLogic';
+
+// 細分化されたビジネスロジックフック
+export { useAIAnalysis } from './business/useAIAnalysis';
+export { useIntervention } from './business/useIntervention';
+export { usePurchaseDecision } from './business/usePurchaseDecision';
+export { useReporting } from './business/useReporting';
+
 /**
  * カートデータ取得とAI分析を管理するカスタムフック
  * Chrome Storage APIとの連携を担当

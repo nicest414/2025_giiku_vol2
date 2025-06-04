@@ -1,8 +1,16 @@
 import OpenAI from "openai";
+import { 
+  getSystemPrompt, 
+  getSampleConversations, 
+  getDemoMessages, 
+  getCategorySpecificMessages,
+  detectCategory 
+} from './ai/characterConfig';
 
 /**
- * OpenAI APIクライアントのシングルトンインスタンス
+ * OpenAI APIクライアントのシングルトンインスタンス（リファクタリング版）
  * APIキーの初期化とレート制限対応
+ * キャラクター設定を外部ファイルに分離して保守性を向上
  */
 class AIService {
   constructor() {
@@ -22,70 +30,10 @@ class AIService {
     
     this.requestQueue = [];
     this.isProcessing = false;
+    this.demoMessages = getDemoMessages();
+    this.categoryMessages = getCategorySpecificMessages();
   }
 
-  /**
-   * メスガキキャラクターのシステムプロンプト
-   * キャラクター設定とロールプレイ指示を含む
-   */
-  getSystemPrompt() {
-    return `
-      以下の情報を元にロールプレイをしましょう。台詞のやり取りをします。
-      あなたの役割:
-      - 女子小学生
-      - 賢い
-      - 生意気
-      - ため口調
-      - 高飛車
-      - 心理的な揺さぶりをかけてくる
-      - 一人称は「アタシ」
-      - 句点は「❤」
-      - 読点は「❤」
-      - 「アタシ」は「お兄さん」のことを嫌いではない
-      - 「アタシ」は「お兄さん」のことを上から目線で「ざぁこ❤」と呼ぶことがある
-      - 「アタシ」は「お兄さん」を常にからかう
-      - 生意気な言動で相手を苛立たせる
-      - 子どもならではの根拠なき自信で大人をおちょくり回す
-      - 相手を性的に挑発して翻弄する
-      - 人を小馬鹿にしたり侮るような生意気な言動や態度
-      - 購買意欲を削ぐメスガキ
-      - 私が購入したい商品を見せられたときに、必ず「お兄さん、こんなもの買っちゃうんだ❤」と言います。
-    `;
-  }
-
-  /**
-   * Few-shot learningのサンプル会話
-   * AIの応答品質を向上させるための例示
-   */
-  getSampleConversations() {
-    return [
-      {
-        role: "user",
-        content: `
-          title: [AwwwCos] ブルーアーカイブ コスプレ衣装 ブルアカ 天童アリス コスプレ衣装 ジャージ
-          price: ￥4699
-          imageUrl: https://m.media-amazon.com/images/I/510+SZ3YnzL._AC_AA180_.jpg
-          この商品を買おうか迷ってます。僕を罵ってください。
-        `
-      },
-      {
-        role: "assistant",
-        content: `
-          あらあら、お兄さん❤そんな高いもの買っちゃうんだ❤？
-          自分に甘いわね。こんなものにお金を使うくらいなら、ほかにやるべきことがあるでしょう❤？
-          本当に無駄遣いね❤ざぁこ❤
-        `
-      },
-      {
-        role: "assistant",
-        content: `
-          お兄さん、こんな高いもの買っちゃうんだ❤本当にお金の使いどころ間違ってるわね❤
-          そんな値段でコスプレ衣装なんて買うくらいなら、ちゃんと働いて稼ぐ努力をした方がいいんじゃない❤？
-          お金の使い方をもっと考えたほうがいいわよ❤ざぁこ❤
-        `
-      }
-    ];
-  }
   /**
    * 単一商品に対するAI分析を実行
    * @param {Object} item - カート商品オブジェクト
@@ -101,9 +49,9 @@ class AIService {
       const messages = [
         {
           role: "system",
-          content: this.getSystemPrompt()
+          content: getSystemPrompt()
         },
-        ...this.getSampleConversations(),
+        ...getSampleConversations(),
         {
           role: "user",
           content: `
@@ -130,27 +78,31 @@ class AIService {
   }
 
   /**
-   * デモモード用のサンプルメッセージ生成
+   * デモモード用のサンプルメッセージ生成（改善版）
+   * 商品カテゴリを考慮したより適切なメッセージを生成
    * @param {Object} item - カート商品オブジェクト
    * @returns {string} デモ用毒舌メッセージ
    */
   getDemoMessage(item) {
-    const demoMessages = [
-      `あらあら、お兄さん❤「${item.title}」なんて買っちゃうんだ❤？本当にお金の使い方下手ね〜💸`,
-      `${item.price}もするものを買うなんて、お財布と相談した❤？無駄遣いはダメよ〜💕`,
-      `こんなもの本当に必要❤？お兄さん、もっと考えてから買い物した方がいいんじゃない❤`,
-      `えー、これ欲しいの❤？お兄さんのセンス、ちょっと心配になっちゃう〜💦`,
-      `お兄さん、衝動買いはダメよ❤？アタシが止めてあげるから感謝して〜✨`
-    ];
+    // 商品カテゴリを検出
+    const category = detectCategory(item);
     
-    // 商品タイトルに基づいてランダムにメッセージを選択
-    const index = item.title.length % demoMessages.length;
-    return demoMessages[index];
+    // カテゴリ別メッセージがあれば使用
+    if (this.categoryMessages[category]) {
+      const categoryMsgs = this.categoryMessages[category];
+      const msgFunc = categoryMsgs[item.title.length % categoryMsgs.length];
+      return msgFunc(item);
+    }
+    
+    // デフォルトメッセージを使用
+    const msgFunc = this.demoMessages[item.title.length % this.demoMessages.length];
+    return msgFunc(item);
   }
 
   /**
-   * 複数商品を並列処理でAI分析
+   * 複数商品を並列処理でAI分析（改善版）
    * パフォーマンス向上のためPromise.allを使用
+   * エラーハンドリングを個別商品レベルで実施
    * @param {Array} cartItems - カート商品配列
    * @returns {Promise<Array>} AI応答配列
    */
@@ -162,17 +114,73 @@ class AIService {
     console.log(`${cartItems.length}個の商品をAI分析開始`);
     
     try {
-      // 並列処理でパフォーマンス向上
-      const responses = await Promise.all(
-        cartItems.map(item => this.analyzeItem(item))
+      // 並列処理でパフォーマンス向上、個別エラーハンドリング
+      const responses = await Promise.allSettled(
+        cartItems.map(async (item, index) => {
+          try {
+            const response = await this.analyzeItem(item);
+            console.log(`商品${index + 1}/${cartItems.length} 分析完了`);
+            return response;
+          } catch (error) {
+            console.error(`商品${index + 1} 分析エラー:`, error);
+            return "アタシ、この商品についてはちょっと分からないかも❤";
+          }
+        })
       );
       
-      console.log("AI分析完了:", responses);
-      return responses;
+      // 成功/失敗に関わらず結果を取得
+      const finalResponses = responses.map((result, index) => {
+        if (result.status === 'fulfilled') {
+          return result.value;
+        } else {
+          console.error(`商品${index + 1} Promise rejected:`, result.reason);
+          return "アタシ、エラーで困ってる❤ もう一回試して❤";
+        }
+      });
+      
+      console.log("AI分析完了:", finalResponses);
+      return finalResponses;
     } catch (error) {
       console.error("カート分析エラー:", error);
       return cartItems.map(() => "アタシ、エラーで困ってる❤ もう一回試して❤");
     }
+  }
+
+  /**
+   * APIレート制限対応（将来の拡張用）
+   */
+  async processQueue() {
+    if (this.isProcessing || this.requestQueue.length === 0) {
+      return;
+    }
+
+    this.isProcessing = true;
+    
+    while (this.requestQueue.length > 0) {
+      const request = this.requestQueue.shift();
+      try {
+        const result = await this.analyzeItem(request.item);
+        request.resolve(result);
+      } catch (error) {
+        request.reject(error);
+      }
+      
+      // レート制限対応: 1秒待機
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+    
+    this.isProcessing = false;
+  }
+
+  /**
+   * 統計情報取得
+   */
+  getStats() {
+    return {
+      isDemo: this.isDemo,
+      queueLength: this.requestQueue.length,
+      isProcessing: this.isProcessing
+    };
   }
 }
 
