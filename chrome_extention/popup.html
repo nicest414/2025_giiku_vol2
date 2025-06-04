@@ -3,12 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amazon Cart</title>
+    <title>メスガキAI - Amazon Cart</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h2>Amazonカート取得</h2>
-    <button id="getCart">カート情報を取得</button>
+    <div class="popup-container">
+        <h2>🛒 Amazon Cart Analyzer</h2>
+        <p class="subtitle">メスガキAIがあなたの買い物をチェック💕</p>
+        
+        <!-- メイン機能ボタン -->
+        <button id="analyzeCart" class="main-button">
+            <span class="button-icon">🎭</span>
+            <span class="button-text">メスガキAI分析</span>
+            <span class="button-subtitle">衝動買い阻止モード</span>
+        </button>
+        
+        <!-- 従来機能ボタン -->
+        <button id="getCart" class="secondary-button">
+            <span class="button-icon">📝</span>
+            <span class="button-text">テキスト出力</span>
+        </button>
+        
+        <div class="footer">
+            <p>💡 Amazonカートページで実行してね</p>
+        </div>
+    </div>
     <script src="popup.js"></script>
 </body>
 </html>

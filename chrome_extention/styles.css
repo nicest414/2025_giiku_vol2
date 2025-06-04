@@ -1,15 +1,113 @@
+/* 🎨 メスガキAI Chrome拡張ポップアップスタイル */
+
 body {
-    width: 200px;
-    text-align: center;
-    font-family: Arial, sans-serif;
+    width: 280px;
+    min-height: 300px;
+    margin: 0;
+    padding: 0;
+    font-family: 'Hiragino Kaku Gothic Pro', 'Meiryo', sans-serif;
+    background: linear-gradient(135deg, #fff5f7 0%, #ffeef0 100%);
 }
 
-button {
-    background-color: #ff9900;
+.popup-container {
+    padding: 20px;
+    text-align: center;
+}
+
+h2 {
+    color: #ff6b6b;
+    margin: 0 0 8px 0;
+    font-size: 1.4rem;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.subtitle {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin: 0 0 20px 0;
+    opacity: 0.8;
+}
+
+/* メインボタン */
+.main-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 15px 10px;
+    margin-bottom: 15px;
+    background: linear-gradient(135deg, #ff8da1 0%, #ffb6c1 100%);
     color: white;
     border: none;
-    padding: 10px;
+    border-radius: 12px;
     cursor: pointer;
-    margin-top: 10px;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(255, 141, 161, 0.3);
+    transition: all 0.3s ease;
+}
+
+.main-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 141, 161, 0.4);
+}
+
+.main-button:active {
+    transform: translateY(0);
+}
+
+/* セカンダリボタン */
+.secondary-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    background: #f8f9fa;
+    color: #6c757d;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.secondary-button:hover {
+    background: #e9ecef;
+    border-color: #dee2e6;
+}
+
+.button-icon {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.secondary-button .button-icon {
+    font-size: 1.2rem;
+    margin-right: 8px;
+    margin-bottom: 0;
+}
+
+.button-text {
+    font-size: 1.1rem;
+    margin-bottom: 3px;
+}
+
+.button-subtitle {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    font-weight: normal;
+}
+
+.footer {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #e9ecef;
+}
+
+.footer p {
+    color: #6c757d;
+    font-size: 0.8rem;
+    margin: 0;
+    opacity: 0.7;
 }

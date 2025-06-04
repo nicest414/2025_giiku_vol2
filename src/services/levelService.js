@@ -30,6 +30,20 @@ const ACHIEVEMENTS = {
     icon: "💪",
     exp: 100
   },
+  ENDURANCE_50: {
+    id: "endurance_50", 
+    title: "メスガキ耐性Lv2",
+    description: "毒舌を50回聞いても耐えた",
+    icon: "🦾",
+    exp: 200
+  },
+  ENDURANCE_100: {
+    id: "endurance_100", 
+    title: "メスガキ耐性MAX",
+    description: "毒舌を100回聞いても買い物した鋼メンタル",
+    icon: "🤖",
+    exp: 500
+  },
   SAVED_10000: {
     id: "saved_10000",
     title: "節約マスター",
@@ -37,12 +51,61 @@ const ACHIEVEMENTS = {
     icon: "💰",
     exp: 200
   },
+  SAVED_50000: {
+    id: "saved_50000",
+    title: "節約の神",
+    description: "5万円の節約達成！すげぇ〜！",
+    icon: "👑",
+    exp: 500
+  },
+  SAVED_100000: {
+    id: "saved_100000",
+    title: "伝説の守銭奴",
+    description: "10万円の節約達成！もう尊敬しかない",
+    icon: "💎",
+    exp: 1000
+  },
   LATE_NIGHT_WARRIOR: {
     id: "late_night_warrior",
     title: "夜更かし買い物戦士",
     description: "深夜2時以降に5回買い物を阻止された",
     icon: "🌙",
     exp: 150
+  },
+  TIMER_MASTER_10: {
+    id: "timer_master_10",
+    title: "冷静沈着",
+    description: "クールダウンタイマーを10回完走",
+    icon: "⏰",
+    exp: 100
+  },
+  TIMER_MASTER_50: {
+    id: "timer_master_50",
+    title: "我慢の達人",
+    description: "クールダウンタイマーを50回完走",
+    icon: "🧘",
+    exp: 300
+  },
+  WEEKLY_BLOCKS_10: {
+    id: "weekly_blocks_10",
+    title: "週間ガード",
+    description: "週に10回の衝動買いを阻止",
+    icon: "📅",
+    exp: 150
+  },
+  HIGH_VALUE_BLOCK: {
+    id: "high_value_block",
+    title: "大物狩り",
+    description: "5万円以上の買い物を阻止",
+    icon: "🎯",
+    exp: 300
+  },
+  CONSISTENCY_30: {
+    id: "consistency_30",
+    title: "継続は力なり",
+    description: "30日連続でアプリを使用",
+    icon: "📈",
+    exp: 400
   }
 };
 
@@ -230,14 +293,59 @@ class LevelService {
       this.unlockAchievement(ACHIEVEMENTS.ENDURANCE_10);
     }
     
+    // メスガキ耐性Lv2
+    if (userData.enduredCount >= 50 && !achievements.endurance_50) {
+      this.unlockAchievement(ACHIEVEMENTS.ENDURANCE_50);
+    }
+    
+    // メスガキ耐性MAX
+    if (userData.enduredCount >= 100 && !achievements.endurance_100) {
+      this.unlockAchievement(ACHIEVEMENTS.ENDURANCE_100);
+    }
+    
     // 節約マスター
     if (userData.totalSaved >= 10000 && !achievements.saved_10000) {
       this.unlockAchievement(ACHIEVEMENTS.SAVED_10000);
     }
     
+    // 節約の神
+    if (userData.totalSaved >= 50000 && !achievements.saved_50000) {
+      this.unlockAchievement(ACHIEVEMENTS.SAVED_50000);
+    }
+    
+    // 伝説の守銭奴
+    if (userData.totalSaved >= 100000 && !achievements.saved_100000) {
+      this.unlockAchievement(ACHIEVEMENTS.SAVED_100000);
+    }
+    
     // 深夜戦士
     if (userData.lateNightBlocks >= 5 && !achievements.late_night_warrior) {
       this.unlockAchievement(ACHIEVEMENTS.LATE_NIGHT_WARRIOR);
+    }
+    
+    // タイマーマスター (10回)
+    if (userData.timerCount >= 10 && !achievements.timer_master_10) {
+      this.unlockAchievement(ACHIEVEMENTS.TIMER_MASTER_10);
+    }
+    
+    // タイマーマスター (50回)
+    if (userData.timerCount >= 50 && !achievements.timer_master_50) {
+      this.unlockAchievement(ACHIEVEMENTS.TIMER_MASTER_50);
+    }
+    
+    // 週間ガード
+    if (userData.weeklyBlockedCount >= 10 && !achievements.weekly_blocks_10) {
+      this.unlockAchievement(ACHIEVEMENTS.WEEKLY_BLOCKS_10);
+    }
+    
+    // 大物狩り
+    if (userData.highValueBlocks >= 1 && !achievements.high_value_block) {
+      this.unlockAchievement(ACHIEVEMENTS.HIGH_VALUE_BLOCK);
+    }
+    
+    // 継続は力なり
+    if (userData.consecutiveDays >= 30 && !achievements.consistency_30) {
+      this.unlockAchievement(ACHIEVEMENTS.CONSISTENCY_30);
     }
   }
 
@@ -310,6 +418,117 @@ class LevelService {
       blockedCount: userData.blockedCount,
       achievementCount: Object.keys(achievements).length,
       achievements: achievements
+    };
+  }
+
+  /**
+   * 月次レポートを生成
+   * READMEのアイデアを実装！
+   */
+  generateMonthlyReport() {
+    const userData = this.getUserLevel();
+    const achievements = this.getAchievements();
+    const currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM
+    
+    // 月次データ取得（実際は購買履歴から計算するけど、とりあえず基本実装）
+    const monthlyData = {
+      totalSaved: userData.totalSaved, // 実際は月次分だけ計算
+      impulseBlockCount: userData.blockedCount,
+      timerCompletions: userData.timerCompletions || 0,
+      lateNightBlocks: userData.lateNightBlocks,
+      averageSavedPerBlock: userData.blockedCount > 0 ? Math.round(userData.totalSaved / userData.blockedCount) : 0,
+      characterRating: this.calculateCharacterRating(userData),
+      topBlockedCategories: this.getTopBlockedCategories(),
+      improvementSuggestions: this.getImprovementSuggestions(userData)
+    };
+
+    return {
+      month: currentMonth,
+      ...monthlyData,
+      reportGenerated: new Date().toISOString(),
+      userLevel: userData.level,
+      userTitle: this.getLevelTitle(userData.level)
+    };
+  }
+
+  /**
+   * メスガキキャラの働きぶりを評価
+   */
+  calculateCharacterRating(userData) {
+    let rating = 1;
+    
+    // 阻止回数で評価
+    if (userData.blockedCount >= 50) rating = 5;
+    else if (userData.blockedCount >= 30) rating = 4;
+    else if (userData.blockedCount >= 15) rating = 3;
+    else if (userData.blockedCount >= 5) rating = 2;
+    
+    const stars = "★".repeat(rating) + "☆".repeat(5 - rating);
+    const comments = [
+      "まだまだ甘い！うちがもっと厳しくしてあげる💢",
+      "少しは成長したかも...でもまだまだよ😏",
+      "まぁまぁ頑張ってるじゃん！でも油断禁物🤭",
+      "すごいじゃん！うちの指導の成果ね〜💕",
+      "完璧！うちのことマスターしたわね👑"
+    ];
+    
+    return {
+      stars,
+      rating,
+      comment: comments[rating - 1]
+    };
+  }
+
+  /**
+   * よく阻止されるカテゴリTOP3（ダミーデータ）
+   */
+  getTopBlockedCategories() {
+    return [
+      { category: "ファッション", count: 12, percentage: 40 },
+      { category: "電子機器", count: 8, percentage: 27 },
+      { category: "本・雑誌", count: 5, percentage: 17 }
+    ];
+  }
+
+  /**
+   * 改善提案を生成
+   */
+  getImprovementSuggestions(userData) {
+    const suggestions = [];
+    
+    if (userData.lateNightBlocks > 10) {
+      suggestions.push("深夜の買い物が多いね〜💤 スマホを寝室に持ち込まないのがおすすめ！");
+    }
+    
+    if (userData.blockedCount < 5) {
+      suggestions.push("まだ衝動買い阻止が少ないかも🤔 もっとうちに頼って！");
+    }
+    
+    if (userData.totalSaved < 5000) {
+      suggestions.push("節約額がまだまだ〜💸 一回の金額を意識してみて！");
+    }
+    
+    if (suggestions.length === 0) {
+      suggestions.push("完璧な節約ライフ！この調子で頑張って〜✨");
+    }
+    
+    return suggestions;
+  }
+
+  /**
+   * 週次統計を取得
+   */
+  getWeeklyStats() {
+    const userData = this.getUserLevel();
+    const oneWeekAgo = new Date();
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+    
+    // 実際は日付フィルタリングが必要だけど、基本実装
+    return {
+      weeklyBlocks: Math.min(userData.blockedCount, 15), // 週間分として仮計算
+      weeklySaved: Math.min(userData.totalSaved, 30000),
+      averageBlocksPerDay: Math.round(userData.blockedCount / 7),
+      improvementFromLastWeek: "+15%" // ダミーデータ
     };
   }
 }
